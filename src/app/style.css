@@ -1,0 +1,33 @@
+html, body, #root {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+}
+
+html, body {
+	height: 100%;
+}
+
+#root {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
+}
+
+.header {
+
+}
+
+.app_name {
+	margin: 0;
+	padding: 0;
+}
+
+.artists_container {
+	display: flex;
+	flex-direction: column;
+}
+
+.artists_list {
+	text-align: left;
+}
