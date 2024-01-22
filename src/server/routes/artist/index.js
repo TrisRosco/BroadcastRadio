@@ -1,44 +1,60 @@
-const express = require('express')
+const express = require("express");
 
-const { Artist } = require('../../database')
+const { Artist } = require("../../database");
 
 module.exports = function (router) {
-	/**
-	 * List artists
-	 */
-	router.get('/artists', async function (req, res) {
-		const artists = await Artist.findAll()
+  /**
+   * List artists
+   */
+  router.get("/artists", async function (req, res) {
+    const artists = await Artist.findAll();
 
-		res.json(artists)
-	})
+    res.json(artists);
+  });
 
-	/**
-	 * Find an artist by ID
-	 */
-	router.get('/artists/:id', async function (req, res) {
-		const artist = await Artist.findByPk(req.params.id)
+  /**
+   * Find an artist by ID
+   */
+  router.get("/artists/:id", async function (req, res) {
+    const artist = await Artist.findByPk(req.params.id);
 
-		res.json(artist)
-	})
+    res.json(artist);
+  });
 
-	/**
-	 * Create a new artist 
-	 */
-	router.put('/artists', function (req, res) {
-		throw new Error("Not implemented")
-	})
+  /**
+   * Create a new artist
+   */
+  router.put("/artists", function (req, res) {
+    throw new Error("Not implemented");
+  });
 
-	/** 
-	 * Update an artist 
-	 */
-	router.post('/artists/:id', function (req, res) {
-		throw new Error("Not implemented")
-	})
+  /**
+   * Update an artist
+   */
+  router.post("/artists/:id", async function (req, res) { 
+    try {
+      const artistId = req.params.id; 
+      const updatedData = req.body; 
+      const artist = await Artist.findByPk(artistId); 
+      if (!artist) {
+        return res
+          .status(404)
+          .send("Could not find artist with ID: " + artistId);
+      }
 
-	/**
-	 * Delete an artist
-	 */
-	router.delete('/artists/:id', function (req, res) {
-		throw new Error("Not implemented")
-	})
-}
+      await artist.update(updatedData); 
+	  console.log(artist);
+      res.status(200).json({ message: 'Artist updated. ID: ', artistId, artist });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error. Could not update ID: " + artistId);
+    }
+  });
+
+  /**
+   * Delete an artist
+   */
+  router.delete("/artists/:id", function (req, res) {
+    throw new Error("Not implemented");
+  });
+};
