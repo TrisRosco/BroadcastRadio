@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import api from '../api';
 
+
 export default class Artists extends React.Component {
 	state = {}
 
@@ -19,9 +20,12 @@ export default class Artists extends React.Component {
 		return (
 			<div className="artists_container">
 				<div className="artists_menu">
-					<button onClick={ this.add }>
+				
+					{/* <button onClick={ this.add }>
 						Add
-					</button>
+					</button> */}
+					{/* Temportary NavLink to add artist  */}
+					<NavLink to="/artists/new"> Add </NavLink>
 				</div>
 
 				{ this.renderList() }
