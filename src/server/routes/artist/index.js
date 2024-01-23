@@ -31,6 +31,8 @@ module.exports = function (router) {
   /**
    * Update an artist
    */
+
+  // Not working yet. Will do once I've finished the rest of the app.
   router.post("/artists/:id", async function (req, res) { 
     try {
       const artistId = req.params.id; 
