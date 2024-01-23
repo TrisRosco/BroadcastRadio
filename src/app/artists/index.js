@@ -42,7 +42,6 @@ export default class Artists extends React.Component {
     }
 
     return (
-
       <DetailsList
         items={data}
         selectionMode={0}
@@ -54,6 +53,7 @@ export default class Artists extends React.Component {
             onRender: (item) => (
               <NavLink to={"/artists/" + item.id}>{item.name}</NavLink>
             ),
+            maxWidth: 100,
           },
           {
             key: "description",
@@ -63,7 +63,6 @@ export default class Artists extends React.Component {
           { key: "label", name: "Label", fieldName: "label" },
         ]}
       />
-      
     );
   }
 }
