@@ -44,6 +44,7 @@ export default class Artists extends React.Component {
   return (
     <DetailsList
       items={data}
+      selectionMode={0}
       columns={[
         { key: "name", name: "Name", fieldName: "name", maxWidth: 100},
         {
