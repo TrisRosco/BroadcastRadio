@@ -1,4 +1,5 @@
 import React from "react";
+import "./style.css"; 
 import { withParams, withNavigate } from "../router-utils";
 import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
 import { TextField } from "@fluentui/react/lib/TextField";
@@ -60,6 +61,7 @@ class Artist extends React.Component {
             onChange={(event, newValue) =>
               this.handleFieldChange("label", newValue)
             }
+            required
           />
 
           <PrimaryButton onClick={this.handleSave}>Save</PrimaryButton>

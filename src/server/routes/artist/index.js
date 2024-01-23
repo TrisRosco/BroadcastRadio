@@ -66,7 +66,15 @@ module.exports = function (router) {
   /**
    * Delete an artist
    */
-  router.delete("/artists/:id", function (req, res) {
-    throw new Error("Not implemented");
+  router.delete("/artists/:id", async function (req, res) {
+    const artist = await Artist.findByPk(req.params.id);
+
+    if (!artist) {
+      return res.status(404).send("Could not find artist with ID: " + artistId);
+    }
+
+    await artist.destroy();
+
+    res.status(200).json({ message: "Artist deleted. ID: ", artistId });
   });
 };
