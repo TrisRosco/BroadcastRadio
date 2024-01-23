@@ -31,6 +31,20 @@ if (isFirstConnection) {
       label: "Periscope",
       description: "Some fella with a guitar",
     });
+
+    await Artist.create({
+      name: "The Beatles",
+      label: "Apple",
+      description:
+        "A bunch of guys from liverpool, they did okay. Pretty obscure though.",
+    });
+
+    await Artist.create({
+      name: "The Rolling Stones",
+      label: "Decca",
+      description:
+        "Fun fact: They're not actually related to any rock formations, nor do they roll.",
+    });
   });
 }
 
