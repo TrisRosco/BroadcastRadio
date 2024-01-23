@@ -73,10 +73,17 @@ class Artist extends React.Component {
   save = async () => {
     const { artist } = this.state;
 
-    await api("/artists/" + artist.id, {
-      method: "POST",
-      body: artist,
-    });
+    if (artist.id) {
+      await api("/artists/" + artist.id, {
+        method: "POST",
+        body: artist,
+      });
+    } else {
+      await api("/artists", {
+        method: "PUT",
+        body: artist,
+      });
+    }
   };
 }
 

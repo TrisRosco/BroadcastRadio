@@ -1,90 +1,68 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { NavLink } from "react-router-dom";
 
-import api from '../api';
-
+import api from "../api";
 
 export default class Artists extends React.Component {
-	state = {}
+  state = {};
 
-	async componentDidMount () {
-		// load the artists from the backend
-		const data = await api('/artists')
+  async componentDidMount() {
+    // load the artists from the backend
+    const data = await api("/artists");
 
-		this.setState({
-			data
-		})
-	}
+    this.setState({
+      data,
+    });
+  }
 
-	render () {
-		return (
-			<div className="artists_container">
-				<div className="artists_menu">
-				
-					{/* <button onClick={ this.add }>
+  render() {
+    return (
+      <div className="artists_container">
+        <div className="artists_menu">
+          {/* <button onClick={ this.add }>
 						Add
 					</button> */}
-					{/* Temportary NavLink to add artist  */}
-					<NavLink to="/artists/new"> Add </NavLink>
-				</div>
+          {/* Temportary NavLink to add artist  */}
+          <NavLink to="/artists/new"> Add </NavLink>
+        </div>
 
-				{ this.renderList() }
-			</div>
-		)
-	}
+        {this.renderList()}
+      </div>
+    );
+  }
 
-	add = () => {
+  add = () => {};
 
-	}
+  renderList() {
+    if (!this.state.data) {
+      return null;
+    }
 
-	renderList () {
-		if (!this.state.data) {
-			return null;
-		}
+    return (
+      <table className="artists_list">
+        <thead>
+          <tr>
+            <th>Artist</th>
+            <th>Label</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>{this.state.data.map(this.renderListItem)}</tbody>
+      </table>
+    );
+  }
 
-		return (
-			<table className="artists_list">
-				<thead>
-					<tr>
-						<th>
-							Artist
-						</th>
-						<th>
-							Label
-						</th>
-						<th>
-							Description
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					{
-						this.state.data.map(this.renderListItem)
-					}
-				</tbody>
-			</table>
-		)
-	}
+  renderListItem(item) {
+    return (
+      <tr>
+        <td>
+          <NavLink to={"/artists/" + item.id}>{item.name}</NavLink>
+        </td>
 
-	renderListItem (item) {
-		return (
-			<tr>
-				<td>
-					<NavLink to={ "/artists/" + item.id }>
-						{ item.name }
-					</NavLink>
-				</td>
+        <td>{item.label}</td>
 
-				<td>
-					{ item.label }
-				</td>
-
-				<td>
-					{ item.description }
-				</td>
-
-			</tr>
-		)
-	}
-
+        <td>{item.description}</td>
+      </tr>
+    );
+  }
 }
