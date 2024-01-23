@@ -34,28 +34,35 @@ export default class Artists extends React.Component {
   add = () => {};
 
   renderList() {
-
-  const { data } = this.state;
+    const { data } = this.state;
 
     if (!this.state.data) {
       return null;
     }
 
-  return (
-    <DetailsList
-      items={data}
-      selectionMode={0}
-      columns={[
-        { key: "name", name: "Name", fieldName: "name", maxWidth: 100},
-        {
-          key: "description",
-          name: "Description",
-          fieldName: "description",
-          minWidth: 100,
-        },
-        { key: "label", name: "Label", fieldName: "label" },
-      ]}
-    />
-  );
-}
+    return (
+      <DetailsList
+        items={data}
+        selectionMode={0}
+        columns={[
+          {
+            key: "name",
+            name: "Name",
+            fieldName: "name",
+            maxWidth: 100,
+            onRender: (item) => (
+              <NavLink to={"/artists/" + item.id}>{item.name}</NavLink>
+            ),
+          },
+          {
+            key: "description",
+            name: "Description",
+            fieldName: "description",
+            minWidth: 100,
+          },
+          { key: "label", name: "Label", fieldName: "label" },
+        ]}
+      />
+    );
+  }
 }
