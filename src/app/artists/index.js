@@ -1,4 +1,5 @@
 import React from "react";
+import "./style.css";
 import { NavLink } from "react-router-dom";
 import { PrimaryButton } from "@fluentui/react/lib/Button";
 import { DetailsList } from "@fluentui/react/lib/DetailsList";
@@ -22,7 +23,7 @@ export default class Artists extends React.Component {
       <div className="artists_container">
         <div className="artists_menu">
           <NavLink to="/artists/new">
-            <PrimaryButton text="Add Artist" />
+            <PrimaryButton text="Add Artist" id="add_artist_button" />
           </NavLink>
         </div>
 
@@ -41,6 +42,7 @@ export default class Artists extends React.Component {
     }
 
     return (
+
       <DetailsList
         items={data}
         selectionMode={0}
@@ -63,6 +65,7 @@ export default class Artists extends React.Component {
           { key: "label", name: "Label", fieldName: "label" },
         ]}
       />
+      
     );
   }
 }

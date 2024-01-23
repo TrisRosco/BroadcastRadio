@@ -66,6 +66,7 @@ class Artist extends React.Component {
 
           <PrimaryButton onClick={this.handleSave}>Save</PrimaryButton>
           <DefaultButton onClick={this.handleDelete}>Delete</DefaultButton>
+          <DefaultButton onClick={this.handleCancel}>Cancel</DefaultButton>
         </Stack>
       </div>
     );
