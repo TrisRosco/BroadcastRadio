@@ -1,10 +1,14 @@
 import React from "react";
 import { withParams, withNavigate } from "../router-utils";
-import { DefaultButton, PrimaryButton} from '@fluentui/react/lib/Button';
-import { TextField} from '@fluentui/react/lib/TextField';
-import { Stack, IStackProps, IStackStyles } from '@fluentui/react/lib/Stack';
+import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
+import { TextField } from "@fluentui/react/lib/TextField";
+import { Stack, IStackProps, IStackStyles } from "@fluentui/react/lib/Stack";
+import { FontSizes } from "@fluentui/theme";
+import { getTheme } from "@fluentui/react";
 
 import api from "../api";
+
+const theme = getTheme();
 
 class Artist extends React.Component {
   state = {};
@@ -29,36 +33,38 @@ class Artist extends React.Component {
     if (!artist) return null;
 
     return (
-      <div className="artist">
-        <fieldset>
-          <legend>Artist Name:</legend>
-          <input
-            type="text"
+      <div className="artist" style={{ boxShadow: theme.effects.elevation8 }}>
+        <Stack tokens={{ childrenGap: 20 }}>
+          <TextField
+            label="Artist Name:"
             value={artist.name}
-            onChange={(event) => this.change("name", event.target.value)}
+            onChange={(event, newValue) =>
+              this.handleFieldChange("name", newValue)
+            }
+            required
           />
-        </fieldset>
 
-        <fieldset>
-          <legend>Description:</legend>
-          <textarea
+          <TextField
+            label="Description:"
             value={artist.description}
-            onChange={(event) => this.change("description", event.target.value)}
+            onChange={(event, newValue) =>
+              this.handleFieldChange("description", newValue)
+            }
+            multiline
+            rows={3}
           />
-        </fieldset>
 
-        <fieldset>
-          <legend>Record label:</legend>
-          <input
-            type="text"
+          <TextField
+            label="Record label:"
             value={artist.label}
-            onChange={(event) => this.change("label", event.target.value)}
+            onChange={(event, newValue) =>
+              this.handleFieldChange("label", newValue)
+            }
           />
-        </fieldset>
 
-        <PrimaryButton onClick={this.save}>Save</PrimaryButton>
-
-        <DefaultButton onClick={this.delete}>Delete</DefaultButton>
+          <PrimaryButton onClick={this.handleSave}>Save</PrimaryButton>
+          <DefaultButton onClick={this.handleDelete}>Delete</DefaultButton>
+        </Stack>
       </div>
     );
   }
@@ -91,3 +97,6 @@ class Artist extends React.Component {
 }
 
 export default withNavigate(withParams(Artist));
+
+
+// I do have a question though. The existing code is written in the older OOP style, and I'm wondering if it would be acceptable for me to refactor it to the modern react format so that I can utilise hooks and generally make it more readable. 
