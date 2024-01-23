@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { PrimaryButton } from '@fluentui/react/lib/Button';
+import { PrimaryButton } from "@fluentui/react/lib/Button";
 
 import api from "../api";
 
@@ -20,13 +20,9 @@ export default class Artists extends React.Component {
     return (
       <div className="artists_container">
         <div className="artists_menu">
-          {/* <button onClick={ this.add }>
-						Add
-					</button> */}
-          {/* Temportary NavLink to add artist  */}
-          <NavLink to="/artists/new"> 
+          <NavLink to="/artists/new">
             <PrimaryButton text="Add Artist" />
-           </NavLink>
+          </NavLink>
         </div>
 
         {this.renderList()}
