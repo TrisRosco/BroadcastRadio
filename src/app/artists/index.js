@@ -3,11 +3,17 @@ import "./style.css";
 import { NavLink } from "react-router-dom";
 import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
 import { DetailsList } from "@fluentui/react/lib/DetailsList";
+import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog';
+
 
 import api from "../api";
 
 export default class Artists extends React.Component {
-  state = {};
+  state = {
+    hideDialog: true,
+    deletingArtistId: null,
+  };
+  
 
   async componentDidMount() {
     // load the artists from the backend
@@ -18,6 +24,17 @@ export default class Artists extends React.Component {
     });
   }
 
+  // State setter for the dialog box to confirm deletion
+  showDialog = (id) => {
+    this.setState({ hideDialog: false, deletingArtistId: id });
+  };
+
+  // The opposite of the above
+  hideDialog = () => {
+    this.setState({ hideDialog: true, deletingArtistId: null });
+  };
+  
+
   render() {
     return (
       <div className="artists_container">
@@ -26,6 +43,23 @@ export default class Artists extends React.Component {
         </NavLink>
 
         {this.renderList()}
+        <Dialog
+        hidden={this.state.hideDialog}
+        onDismiss={this.hideDialog}
+        dialogContentProps={{
+          type: DialogType.normal,
+          title: 'Delete Artist',
+          subText: 'Are you sure you want to delete this artist?',
+        }}
+        modalProps={{
+          isBlocking: true,
+        }}
+      >
+        <DialogFooter>
+          <PrimaryButton onClick={this.delete} text="Delete" />
+          <DefaultButton onClick={this.hideDialog} text="Cancel" />
+        </DialogFooter>
+      </Dialog>
       </div>
     );
   }
@@ -77,7 +111,7 @@ export default class Artists extends React.Component {
           },
           {
             onRender: (item) => (
-              <DefaultButton onClick={() => this.delete(item.id)}>
+              <DefaultButton onClick={() => this.showDialog(item.id)}>
                 Delete
               </DefaultButton>
             ),
