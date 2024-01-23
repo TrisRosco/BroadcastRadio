@@ -1,5 +1,8 @@
 import React from "react";
 import { withParams, withNavigate } from "../router-utils";
+import { DefaultButton, PrimaryButton} from '@fluentui/react/lib/Button';
+import { TextField} from '@fluentui/react/lib/TextField';
+import { Stack, IStackProps, IStackStyles } from '@fluentui/react/lib/Stack';
 
 import api from "../api";
 
@@ -53,9 +56,9 @@ class Artist extends React.Component {
           />
         </fieldset>
 
-        <button onClick={this.save}>Save</button>
+        <PrimaryButton onClick={this.save}>Save</PrimaryButton>
 
-        <button onClick={this.delete}>Delete</button>
+        <DefaultButton onClick={this.delete}>Delete</DefaultButton>
       </div>
     );
   }
