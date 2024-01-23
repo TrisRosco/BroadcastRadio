@@ -25,7 +25,9 @@ module.exports = function (router) {
    * Create a new artist
    */
   router.post("/artists", async function (req, res) {
-    res.json({ message: "PLACEHOLDER CREATE" });
+    const artist = await Artist.create(req.body);
+
+    res.status(201).json(artist);
   });
 
   /**
@@ -34,7 +36,11 @@ module.exports = function (router) {
 
   // Not working yet. Will do once I've finished the rest of the app.
   router.put("/artists/:id", async function (req, res) {
-    res.json({ message: "PLACEHOLDER UPDATE" });
+    const artist = await Artist.findByPk(req.params.id);
+
+    await artist.update(req.body);
+
+    res.json(artist);
   });
 
   /**

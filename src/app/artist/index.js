@@ -81,14 +81,16 @@ class Artist extends React.Component {
 
     if (artist.id) {
       await api("/artists/" + artist.id, {
-        method: "POST",
+        method: "PUT",
         body: artist,
       });
     } else {
       await api("/artists", {
-        method: "PUT",
+        method: "POST",
         body: artist,
       });
+
+      this.props.navigate("/artists");
     }
   };
 
