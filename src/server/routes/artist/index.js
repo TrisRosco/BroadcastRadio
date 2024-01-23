@@ -24,7 +24,7 @@ module.exports = function (router) {
   /**
    * Create a new artist
    */
-  router.put("/artists", async function (req, res) {
+  router.post("/artists", async function (req, res) {
     const artists = await Artist.findAll();
     const newId = artists.length + 1; // At some point this should become a UUID, or something equally as robust.
     const newArtist = await Artist.create({ id: newId, ...req.body });
@@ -41,7 +41,7 @@ module.exports = function (router) {
    */
 
   // Not working yet. Will do once I've finished the rest of the app.
-  router.post("/artists/:id", async function (req, res) {
+  router.put("/artists/:id", async function (req, res) {
     try {
       const artistId = req.params.id;
       const updatedData = req.body;
