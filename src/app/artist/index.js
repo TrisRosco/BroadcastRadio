@@ -95,11 +95,13 @@ class Artist extends React.Component {
   delete = async () => {
     const { artist } = this.state;
 
-    await api("/artists/" + artist.id, {
-      method: "DELETE",
-    });
+    if (artist.id) {
+      await api("/artists/" + artist.id, {
+        method: "DELETE",
+      });
+    }
 
-    this.props.navigate("/artists");
+    this.props.navigate("/");
   };
 
   cancel = () => {

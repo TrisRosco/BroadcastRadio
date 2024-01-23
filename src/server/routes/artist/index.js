@@ -42,9 +42,10 @@ module.exports = function (router) {
    */
   router.delete("/artists/:id", async function (req, res) {
     const artist = await Artist.findByPk(req.params.id);
+    const deletedArtist = artist.id;
 
     await artist.destroy();
 
-    res.status(200).json({ message: "Artist deleted. ID: ", artistId });
+    res.status(200).json({ message: "Artist deleted. ID: ", deletedArtist });
   });
 };
