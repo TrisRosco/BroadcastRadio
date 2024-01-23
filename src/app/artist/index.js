@@ -90,7 +90,7 @@ class Artist extends React.Component {
         body: artist,
       });
 
-      this.props.navigate("/artists");
+      this.props.navigate("/");
     }
   };
 
