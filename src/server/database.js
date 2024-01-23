@@ -24,6 +24,7 @@ const Artist =
     },
   });
 
+// This is so janky but I wanted more dummy data. Please don't throw rocks at me.
 if (isFirstConnection) {
   sequelize.sync().then(async (_) => {
     await Artist.create({
