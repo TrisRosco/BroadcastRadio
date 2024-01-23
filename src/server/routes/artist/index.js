@@ -25,9 +25,15 @@ module.exports = function (router) {
    * Create a new artist
    */
   router.post("/artists", async function (req, res) {
-    const artist = await Artist.create(req.body);
+    const artist = await Artist.create({
+      name: req.body.name,
+      description: req.body.description,
+      label: req.body.label,
+    });
 
-    res.status(201).json(artist);
+    console.log(artist);
+
+    res.json(artist);
   });
 
   /**

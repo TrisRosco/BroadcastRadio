@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 import { NavLink } from "react-router-dom";
-import { PrimaryButton } from "@fluentui/react/lib/Button";
+import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
 import { DetailsList } from "@fluentui/react/lib/DetailsList";
 
 import api from "../api";
@@ -21,18 +21,27 @@ export default class Artists extends React.Component {
   render() {
     return (
       <div className="artists_container">
-        <div className="artists_menu">
-          <NavLink to="/artists/new">
-            <PrimaryButton text="Add Artist" id="add_artist_button" />
-          </NavLink>
-        </div>
+        <NavLink to="/artists/new">
+          <PrimaryButton text="Add Artist" id="add_artist_button" />
+        </NavLink>
 
         {this.renderList()}
       </div>
     );
   }
 
-  add = () => {};
+  async delete(id) {
+    await api("/artists/" + id, {
+      method: "DELETE",
+    });
+
+    const data = await api("/artists");
+
+    this.setState({
+      data,
+    });
+  }
+
 
   renderList() {
     const { data } = this.state;
@@ -50,9 +59,6 @@ export default class Artists extends React.Component {
             key: "name",
             name: "Name",
             fieldName: "name",
-            onRender: (item) => (
-              <NavLink to={"/artists/" + item.id}>{item.name}</NavLink>
-            ),
             maxWidth: 100,
           },
           {
@@ -60,7 +66,23 @@ export default class Artists extends React.Component {
             name: "Description",
             fieldName: "description",
           },
-          { key: "label", name: "Label", fieldName: "label" },
+          {
+            key: "label",
+            name: "Label",
+            fieldName: "label",
+          },
+          {
+            onRender: (item) => (
+              <DefaultButton to={"/artists/" + item.id}>Edit</DefaultButton>
+            ),
+          },
+          {
+            onRender: (item) => (
+              <DefaultButton onClick={() => this.delete(item.id)}>
+                Delete
+              </DefaultButton>
+            ),
+          },
         ]}
       />
     );
