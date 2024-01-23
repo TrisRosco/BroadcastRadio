@@ -100,5 +100,3 @@ class Artist extends React.Component {
 
 export default withNavigate(withParams(Artist));
 
-
-// I do have a question though. The existing code is written in the older OOP style, and I'm wondering if it would be acceptable for me to refactor it to the modern react format so that I can utilise hooks and generally make it more readable. 
