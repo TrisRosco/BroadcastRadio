@@ -42,7 +42,6 @@ export default class Artists extends React.Component {
     });
   }
 
-
   renderList() {
     const { data } = this.state;
 
@@ -73,7 +72,7 @@ export default class Artists extends React.Component {
           },
           {
             onRender: (item) => (
-              <DefaultButton to={"/artists/" + item.id}>Edit</DefaultButton>
+              <DefaultButton href={"/artists/" + item.id}>Edit</DefaultButton>
             ),
           },
           {
