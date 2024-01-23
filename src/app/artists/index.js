@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { PrimaryButton } from "@fluentui/react/lib/Button";
+import { DetailsList } from "@fluentui/react/lib/DetailsList";
 
 import api from "../api";
 
@@ -33,35 +34,27 @@ export default class Artists extends React.Component {
   add = () => {};
 
   renderList() {
+
+  const { data } = this.state;
+
     if (!this.state.data) {
       return null;
     }
 
-    return (
-      <table className="artists_list">
-        <thead>
-          <tr>
-            <th>Artist</th>
-            <th>Label</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>{this.state.data.map(this.renderListItem)}</tbody>
-      </table>
-    );
-  }
-
-  renderListItem(item) {
-    return (
-      <tr>
-        <td>
-          <NavLink to={"/artists/" + item.id}>{item.name}</NavLink>
-        </td>
-
-        <td>{item.label}</td>
-
-        <td>{item.description}</td>
-      </tr>
-    );
-  }
+  return (
+    <DetailsList
+      items={data}
+      columns={[
+        { key: "name", name: "Name", fieldName: "name", maxWidth: 100},
+        {
+          key: "description",
+          name: "Description",
+          fieldName: "description",
+          minWidth: 100,
+        },
+        { key: "label", name: "Label", fieldName: "label" },
+      ]}
+    />
+  );
+}
 }
