@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.css"; 
+import "./style.css";
 import { withParams, withNavigate } from "../router-utils";
 import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
 import { TextField } from "@fluentui/react/lib/TextField";
@@ -39,18 +39,14 @@ class Artist extends React.Component {
           <TextField
             label="Artist Name:"
             value={artist.name}
-            onChange={(event, newValue) =>
-              this.handleFieldChange("name", newValue)
-            }
+            onChange={(event, newValue) => this.change("name", newValue)}
             required
           />
 
           <TextField
             label="Description:"
             value={artist.description}
-            onChange={(event, newValue) =>
-              this.handleFieldChange("description", newValue)
-            }
+            onChange={(event, newValue) => this.change("description", newValue)}
             multiline
             rows={3}
           />
@@ -58,15 +54,13 @@ class Artist extends React.Component {
           <TextField
             label="Record label:"
             value={artist.label}
-            onChange={(event, newValue) =>
-              this.handleFieldChange("label", newValue)
-            }
+            onChange={(event, newValue) => this.change("label", newValue)}
             required
           />
 
-          <PrimaryButton onClick={this.handleSave}>Save</PrimaryButton>
-          <DefaultButton onClick={this.handleDelete}>Delete</DefaultButton>
-          <DefaultButton onClick={this.handleCancel}>Cancel</DefaultButton>
+          <PrimaryButton onClick={this.save}>Save</PrimaryButton>
+          <DefaultButton onClick={this.delete}>Delete</DefaultButton>
+          <DefaultButton onClick={this.cancel}>Cancel</DefaultButton>
         </Stack>
       </div>
     );
@@ -97,7 +91,20 @@ class Artist extends React.Component {
       });
     }
   };
+
+  delete = async () => {
+    const { artist } = this.state;
+
+    await api("/artists/" + artist.id, {
+      method: "DELETE",
+    });
+
+    this.props.navigate("/artists");
+  };
+
+  cancel = () => {
+    this.props.navigate("/");
+  };
 }
 
 export default withNavigate(withParams(Artist));
-

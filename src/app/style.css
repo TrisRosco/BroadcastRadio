@@ -16,8 +16,9 @@ html, body {
 }
 
 .card {
-	max-width: 400px;
+	width: 500px;
 	border-radius: 2px;
+	
 }
 
 .header {

@@ -51,7 +51,6 @@ export default class Artists extends React.Component {
             key: "name",
             name: "Name",
             fieldName: "name",
-            maxWidth: 100,
             onRender: (item) => (
               <NavLink to={"/artists/" + item.id}>{item.name}</NavLink>
             ),
@@ -60,7 +59,6 @@ export default class Artists extends React.Component {
             key: "description",
             name: "Description",
             fieldName: "description",
-            minWidth: 100,
           },
           { key: "label", name: "Label", fieldName: "label" },
         ]}

@@ -1,3 +1,8 @@
 #add_artist_button {
     width: 100%;
 }
+
+.artist_container {
+    display: flex;
+    flex-direction: column;
+}
