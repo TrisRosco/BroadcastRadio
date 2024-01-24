@@ -18,6 +18,7 @@ export default class Artists extends React.Component {
     deletingArtistId: null,
   };
 
+  // a bit like useEffect
   async componentDidMount() {
     // load the artists from the backend
     const data = await api("/artists");
@@ -35,6 +36,32 @@ export default class Artists extends React.Component {
   // The opposite of the above
   hideDialog = () => {
     this.setState({ hideDialog: true, deletingArtistId: null });
+  };
+
+  // Message bar to announce success or failure of deletion
+  renderMessageBar() {
+    const { isHidden, message } = this.state.messageBar;
+    if (isHidden) {
+      return null;
+    }
+
+    return (
+      <MessageBar
+        messageBarType={MessageBarType.success}
+        isMultiline={false}
+        onDismiss={this.hideMessageBar}
+        dismissButtonAriaLabel="Close"
+      >
+        {message}
+      </MessageBar>
+    );
+  }
+
+  // State setter to hide the message bar
+  hideMessageBar = () => {
+    this.setState({
+      messageBar: { ...this.state.messageBar, isHidden: true },
+    });
   };
 
   render() {
@@ -67,13 +94,32 @@ export default class Artists extends React.Component {
   }
 
   delete = async () => {
-    await api("/artists/" + this.state.deletingArtistId, {
-      // set the endpoint to the artist we want to delete
-      method: "DELETE",
-    });
+    try {
+      await api("/artists/" + this.state.deletingArtistId, {
+        method: "DELETE",
+      });
 
-    const data = await api("/artists");
-    this.setState({ data, hideDialog: true, deletingArtistId: null }); // Reset the state of the dialog box
+      const data = await api("/artists");
+      this.setState({
+        data,
+        hideDialog: true,
+        deletingArtistId: null,
+        messageBar: {
+          isHidden: false,
+          message: "Artist deleted successfully.",
+        },
+      });
+
+      setTimeout(() => this.hideMessageBar(), 3000);
+    } catch (error) {
+      // Handle error scenario
+      this.setState({
+        messageBar: {
+          isHidden: false,
+          message: "Error deleting artist.",
+        },
+      });
+    }
   };
 
   renderList() {
