@@ -31,7 +31,6 @@ class Artist extends React.Component {
     }
   }
 
-
   change = (field, newValue) => {
     const artist = { ...this.state.artist };
 
@@ -40,11 +39,15 @@ class Artist extends React.Component {
     this.setState({
       artist,
     });
-
   };
 
   updateArtist = async () => {
     const { artist } = this.state;
+
+    // basic front end validation
+    if (!artist.name || !artist.label) {
+      return;
+    }
 
     if (artist.id) {
       await api("/artists/" + artist.id, {
@@ -56,11 +59,14 @@ class Artist extends React.Component {
     this.props.navigate("/");
   };
 
-
   saveNew = async () => {
     const { artist } = this.state;
-    console.log(artist);
-    
+
+    // basic front end validation
+    if (!artist.name || !artist.label) {
+      return;
+    }
+
     await api("/artists", {
       method: "POST",
       body: artist,
@@ -68,7 +74,6 @@ class Artist extends React.Component {
 
     this.props.navigate("/");
   };
-
 
   delete = async () => {
     const { artist } = this.state;
