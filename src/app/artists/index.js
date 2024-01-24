@@ -5,6 +5,8 @@ import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
 import { DetailsList } from "@fluentui/react/lib/DetailsList";
 import { Dialog, DialogType, DialogFooter } from "@fluentui/react/lib/Dialog";
 import { MessageBar, MessageBarType } from "@fluentui/react";
+import { Stack } from "@fluentui/react/lib/Stack";
+import { SearchBox } from '@fluentui/react/lib/SearchBox';
 
 import api from "../api";
 
@@ -96,10 +98,16 @@ export default class Artists extends React.Component {
   render() {
     return (
       <div className="artists_container">
-        <NavLink to="/artists/new">
-          <PrimaryButton text="Add Artist" id="add_artist_button" />
-        </NavLink>
-
+        <Stack
+          horizontal
+          horizontalAlign="center"
+          tokens={{ childrenGap: 20 }}
+        >
+          <SearchBox placeholder="Search" underlined={true} />
+          <NavLink to="/artists/new">
+            <PrimaryButton text="Add Artist" id="add_artist_button" />
+          </NavLink>
+        </Stack>
         {this.renderList()}
         <Dialog
           hidden={this.state.hideDialog}
