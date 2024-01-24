@@ -9,29 +9,40 @@ module.exports = function (router) {
    * List artists
    */
   router.get("/artists", async function (req, res) {
-    const artists = await Artist.findAll();
-
-    res.json(artists);
+    try {
+      const artists = await Artist.findAll();
+      res.json(artists);
+    } catch (err) {
+      res.status(500).json({ message: "Error fetching artists", error: err.message });
+    }
   });
 
   /**
    * Find an artist by ID
    */
   router.get("/artists/:id", async function (req, res) {
-    const artist = await Artist.findByPk(req.params.id);
-
-    res.json(artist);
+    try {
+      const artist = await Artist.findByPk(req.params.id);
+      if (!artist) {
+        return res.status(404).json({ message: "Artist not found" });
+      }
+      res.json(artist);
+    } catch (err) {
+      res.status(500).json({ message: "Error fetching artist", error: err.message });
+    }
   });
+
 
   /**
    * Create a new artist
    */
   router.post("/artists", async function (req, res) {
-    const artist = await Artist.create(req.body);
-
-    console.log(artist);
-
-    res.status(201).json({ message: "Artist created. ID: ", artist });
+    try {
+      const artist = await Artist.create(req.body);
+      res.status(201).json({ message: "Artist created. ID: ", artist });
+    } catch (err) {
+      res.status(500).json({ message: "Error creating artist", error: err.message });
+    }
   });
 
   /**
@@ -39,22 +50,32 @@ module.exports = function (router) {
    */
 
   router.put("/artists/:id", async function (req, res) {
-    const artist = await Artist.findByPk(req.params.id);
-
-    await artist.update(req.body);
-
-    res.status(200).json({ message: "Artist updated. ID: ", artist }); 
+    try {
+      const artist = await Artist.findByPk(req.params.id);
+      if (!artist) {
+        return res.status(404).json({ message: "Artist not found" });
+      }
+      await artist.update(req.body);
+      res.status(200).json({ message: "Artist updated. ID: ", artist });
+    } catch (err) {
+      res.status(500).json({ message: "Error updating artist", error: err.message });
+    }
   });
 
   /**
    * Delete an artist
    */
   router.delete("/artists/:id", async function (req, res) {
-    const artist = await Artist.findByPk(req.params.id);
-    const deletedArtist = artist.id;
-
-    await artist.destroy();
-
-    res.status(200).json({ message: "Artist deleted. ID: ", deletedArtist });
+    try {
+      const artist = await Artist.findByPk(req.params.id);
+      if (!artist) {
+        return res.status(404).json({ message: "Artist not found" });
+      }
+      const deletedArtist = artist.id;
+      await artist.destroy();
+      res.status(200).json({ message: "Artist deleted. ID: ", deletedArtist });
+    } catch (err) {
+      res.status(500).json({ message: "Error deleting artist", error: err.message });
+    }
   });
 };
