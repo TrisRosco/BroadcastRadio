@@ -28,6 +28,36 @@ export default class Artists extends React.Component {
     });
   }
 
+  
+  delete = async () => {
+    try {
+      await api("/artists/" + this.state.deletingArtistId, {
+        method: "DELETE",
+      });
+
+      const data = await api("/artists");
+      this.setState({
+        data,
+        hideDialog: true,
+        deletingArtistId: null,
+        messageBar: {
+          isHidden: false,
+          message: "Artist deleted successfully.",
+        },
+      });
+
+      setTimeout(() => this.hideMessageBar(), 3000);
+    } catch (error) {
+      // Handle error scenario
+      this.setState({
+        messageBar: {
+          isHidden: false,
+          message: "Error deleting artist.",
+        },
+      });
+    }
+  };
+
   // State setter for the dialog box to confirm deletion
   showDialog = (id) => {
     this.setState({ hideDialog: false, deletingArtistId: id });
@@ -92,35 +122,6 @@ export default class Artists extends React.Component {
       </div>
     );
   }
-
-  delete = async () => {
-    try {
-      await api("/artists/" + this.state.deletingArtistId, {
-        method: "DELETE",
-      });
-
-      const data = await api("/artists");
-      this.setState({
-        data,
-        hideDialog: true,
-        deletingArtistId: null,
-        messageBar: {
-          isHidden: false,
-          message: "Artist deleted successfully.",
-        },
-      });
-
-      setTimeout(() => this.hideMessageBar(), 3000);
-    } catch (error) {
-      // Handle error scenario
-      this.setState({
-        messageBar: {
-          isHidden: false,
-          message: "Error deleting artist.",
-        },
-      });
-    }
-  };
 
   renderList() {
     const { data } = this.state;
