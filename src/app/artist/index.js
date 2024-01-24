@@ -30,45 +30,6 @@ class Artist extends React.Component {
     }
   }
 
-  render() {
-    const { artist } = this.state;
-
-    if (!artist) return null;
-
-    return (
-      <div className="artist" style={{ boxShadow: theme.effects.elevation8 }}>
-        <Stack tokens={{ childrenGap: 20 }}>
-          <TextField
-            label="Artist Name:"
-            value={artist.name}
-            onChange={(event, newValue) => this.change("name", newValue)}
-            required
-          />
-          <TextField
-            label="Description:"
-            value={artist.description}
-            onChange={(event, newValue) => this.change("description", newValue)}
-            multiline
-            rows={3}
-          />
-          <TextField
-            label="Record label:"
-            value={artist.label}
-            onChange={(event, newValue) => this.change("label", newValue)}
-            required
-          />
-          <PrimaryButton onClick={this.save}>Save</PrimaryButton>
-
-          {this.state.isNew == false && (
-            <DefaultButton onClick={this.delete}>Delete</DefaultButton>
-          )}
-
-          <DefaultButton onClick={this.cancel}>Cancel</DefaultButton>
-        </Stack>
-      </div>
-    );
-  }
-
   change = (field, newValue) => {
     const artist = Object.assign({}, this.state.artist);
 
@@ -112,6 +73,45 @@ class Artist extends React.Component {
   cancel = () => {
     this.props.navigate("/");
   };
+
+  render() {
+    const { artist } = this.state;
+
+    if (!artist) return null;
+
+    return (
+      <div className="artist" style={{ boxShadow: theme.effects.elevation8 }}>
+        <Stack tokens={{ childrenGap: 20 }}>
+          <TextField
+            label="Artist Name:"
+            value={artist.name}
+            onChange={(event, newValue) => this.change("name", newValue)}
+            required
+          />
+          <TextField
+            label="Description:"
+            value={artist.description}
+            onChange={(event, newValue) => this.change("description", newValue)}
+            multiline
+            rows={3}
+          />
+          <TextField
+            label="Record label:"
+            value={artist.label}
+            onChange={(event, newValue) => this.change("label", newValue)}
+            required
+          />
+          <PrimaryButton onClick={this.save}>Save</PrimaryButton>
+
+          {this.state.isNew == false && (
+            <DefaultButton onClick={this.delete}>Delete</DefaultButton>
+          )}
+
+          <DefaultButton onClick={this.cancel}>Cancel</DefaultButton>
+        </Stack>
+      </div>
+    );
+  }
 }
 
 export default withNavigate(withParams(Artist));
