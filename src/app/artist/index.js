@@ -40,7 +40,7 @@ class Artist extends React.Component {
     });
   };
 
-  save = async () => {
+  updateArtist = async () => {
     const { artist } = this.state;
 
     if (artist.id) {
@@ -48,14 +48,17 @@ class Artist extends React.Component {
         method: "PUT",
         body: artist,
       });
-    } else {
-      await api("/artists", {
-        method: "POST",
-        body: artist,
-      });
-
-      this.props.navigate("/");
     }
+  };
+
+  saveNew = async () => {
+    const { artist } = this.state;
+    await api("/artists", {
+      method: "POST",
+      body: artist,
+    });
+
+    this.props.navigate("/");
   };
 
   delete = async () => {
@@ -101,7 +104,11 @@ class Artist extends React.Component {
             onChange={(event, newValue) => this.change("label", newValue)}
             required
           />
-          <PrimaryButton onClick={this.save}>Save</PrimaryButton>
+          <PrimaryButton
+            onClick={this.state.isNew ? this.saveNew : this.updateArtist}
+          >
+            Save
+          </PrimaryButton>
 
           {this.state.isNew == false && (
             <DefaultButton onClick={this.delete}>Delete</DefaultButton>
