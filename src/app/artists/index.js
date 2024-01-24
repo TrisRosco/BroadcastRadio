@@ -3,8 +3,7 @@ import "./style.css";
 import { NavLink } from "react-router-dom";
 import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
 import { DetailsList } from "@fluentui/react/lib/DetailsList";
-import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog';
-
+import { Dialog, DialogType, DialogFooter } from "@fluentui/react/lib/Dialog";
 
 import api from "../api";
 
@@ -13,7 +12,6 @@ export default class Artists extends React.Component {
     hideDialog: true,
     deletingArtistId: null,
   };
-  
 
   async componentDidMount() {
     // load the artists from the backend
@@ -33,7 +31,6 @@ export default class Artists extends React.Component {
   hideDialog = () => {
     this.setState({ hideDialog: true, deletingArtistId: null });
   };
-  
 
   render() {
     return (
@@ -44,37 +41,35 @@ export default class Artists extends React.Component {
 
         {this.renderList()}
         <Dialog
-        hidden={this.state.hideDialog}
-        onDismiss={this.hideDialog}
-        dialogContentProps={{
-          type: DialogType.normal,
-          title: 'Delete Artist',
-          subText: 'Are you sure you want to delete this artist?',
-        }}
-        modalProps={{
-          isBlocking: true,
-        }}
-      >
-        <DialogFooter>
-          <PrimaryButton onClick={this.delete} text="Delete" />
-          <DefaultButton onClick={this.hideDialog} text="Cancel" />
-        </DialogFooter>
-      </Dialog>
+          hidden={this.state.hideDialog}
+          onDismiss={this.hideDialog}
+          dialogContentProps={{
+            type: DialogType.normal,
+            title: "Delete Artist",
+            subText: "Are you sure you want to delete this artist?",
+          }}
+          modalProps={{
+            isBlocking: true,
+          }}
+        >
+          <DialogFooter>
+            <PrimaryButton onClick={this.delete} text="Delete" />
+            <DefaultButton onClick={this.hideDialog} text="Cancel" />
+          </DialogFooter>
+        </Dialog>
       </div>
     );
   }
 
-  async delete(id) {
-    await api("/artists/" + id, {
+  delete = async () => {
+    await api("/artists/" + this.state.deletingArtistId, {
+      // set the endpoint to the artist we want to delete
       method: "DELETE",
     });
 
     const data = await api("/artists");
-
-    this.setState({
-      data,
-    });
-  }
+    this.setState({ data, hideDialog: true, deletingArtistId: null }); // Reset the state of the dialog box
+  };
 
   renderList() {
     const { data } = this.state;
