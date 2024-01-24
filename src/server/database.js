@@ -44,7 +44,13 @@ if (isFirstConnection) {
       name: "The Rolling Stones",
       label: "Decca",
       description:
-        "Fun fact: They're not actually related to any rock formations, nor do they roll.",
+        "Fun fact: They're not actually related to any rock formations.",
+    });
+
+    await Artist.create({
+      name: "Arianna Grande",
+      label: "Republic",
+      description: "Ironically, she's actually quite short.",
     });
   });
 }
