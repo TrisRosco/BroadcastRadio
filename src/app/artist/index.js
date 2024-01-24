@@ -4,7 +4,6 @@ import { withParams, withNavigate } from "../router-utils";
 import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
 import { TextField } from "@fluentui/react/lib/TextField";
 import { Stack, IStackProps, IStackStyles } from "@fluentui/react/lib/Stack";
-import { FontSizes } from "@fluentui/theme";
 import { getTheme } from "@fluentui/react";
 
 import api from "../api";
@@ -12,7 +11,9 @@ import api from "../api";
 const theme = getTheme();
 
 class Artist extends React.Component {
-  state = {};
+  state = {
+    isNew: false,
+  };
 
   async componentDidMount() {
     const { id: artistId } = this.props.params;
@@ -20,6 +21,7 @@ class Artist extends React.Component {
     if (artistId === "new") {
       // Initialize state for a new artist
       this.setState({
+        isNew: true,
         artist: { name: "", description: "", label: "" },
       });
     } else {
@@ -27,6 +29,7 @@ class Artist extends React.Component {
       this.setState({ artist });
     }
   }
+
 
   render() {
     const { artist } = this.state;
