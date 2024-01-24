@@ -100,10 +100,18 @@ export default class Artists extends React.Component {
     });
   };
 
-  // Search function
+  // Filter function
+  handleFilter = (event) => {
+    const { value } = event.target;
+    const { data } = this.state;
+    const filteredData = data.filter((artist) => {
+      return artist.name.toLowerCase().includes(value.toLowerCase());
+    });
+    this.setState({ data: filteredData });
 
-  handleSearch = (event) => {
-    // TODO
+    if (value === "") {
+      this.componentDidMount();
+    }
   };
 
   render() {
@@ -121,7 +129,7 @@ export default class Artists extends React.Component {
         >
           <SearchBox
             placeholder="Search"
-            onChange={this.handleSearch}
+            onChange={this.handleFilter}
             underlined={true}
             styles={{
               root: {
@@ -187,7 +195,7 @@ export default class Artists extends React.Component {
             name: "Name",
             fieldName: "name",
             minWidth: 100,
-            maxWidth: 120,
+            maxWidth: 110,
           },
           {
             key: "description",

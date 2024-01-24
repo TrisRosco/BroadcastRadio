@@ -16,9 +16,8 @@ html, body {
 }
 
 .card {
-	min-width: 375px;
+	width: 800px;
 	margin: 20px;
-
 }
 
 .header {
@@ -29,7 +28,6 @@ html, body {
 	justify-content: center;
 	align-items: center;
 	padding: 10px;
-	border-radius: 2px;
 	box-sizing: border-box;
 }
 
