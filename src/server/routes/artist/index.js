@@ -31,20 +31,19 @@ module.exports = function (router) {
 
     console.log(artist);
 
-    res.json(artist);
+    res.status(201).json({ message: "Artist created. ID: ", artist });
   });
 
   /**
    * Update an artist
    */
 
-  // Not working yet. Will do once I've finished the rest of the app.
   router.put("/artists/:id", async function (req, res) {
     const artist = await Artist.findByPk(req.params.id);
 
     await artist.update(req.body);
 
-    res.json(artist);
+    res.status(200).json({ message: "Artist updated. ID: ", artist }); 
   });
 
   /**
