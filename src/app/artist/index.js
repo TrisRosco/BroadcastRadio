@@ -13,6 +13,10 @@ const theme = getTheme();
 class Artist extends React.Component {
   state = {
     isNew: false,
+    isEmpty: {
+      name: false,
+      label: false,
+    },
   };
 
   async componentDidMount() {
@@ -44,7 +48,8 @@ class Artist extends React.Component {
   updateArtist = async () => {
     const { artist } = this.state;
 
-    // basic front end validation
+    this.checkFields();
+
     if (!artist.name || !artist.label) {
       return;
     }
@@ -62,7 +67,8 @@ class Artist extends React.Component {
   saveNew = async () => {
     const { artist } = this.state;
 
-    // basic front end validation
+    this.checkFields();
+
     if (!artist.name || !artist.label) {
       return;
     }
@@ -73,6 +79,19 @@ class Artist extends React.Component {
     });
 
     this.props.navigate("/");
+  };
+
+  checkFields = () => {
+    const { artist } = this.state;
+
+    if (!artist.name || !artist.label) {
+      this.setState({
+        isEmpty: {
+          name: !artist.name,
+          label: !artist.label,
+        },
+      });
+    }
   };
 
   delete = async () => {
@@ -104,6 +123,9 @@ class Artist extends React.Component {
             value={artist.name}
             onChange={(event) => this.change("name", event.target.value)}
             required
+            errorMessage={
+              this.state.isEmpty.name ? "This field is required" : ""
+            }
           />
           <TextField
             label="Description:"
@@ -117,6 +139,9 @@ class Artist extends React.Component {
             value={artist.label}
             onChange={(event) => this.change("label", event.target.value)}
             required
+            errorMessage={
+              this.state.isEmpty.label ? "This field is required" : ""
+            }
           />
           <PrimaryButton
             onClick={this.state.isNew ? this.saveNew : this.updateArtist}
