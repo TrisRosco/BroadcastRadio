@@ -114,7 +114,11 @@ export default class Artists extends React.Component {
           }}
         >
           <DialogFooter>
-            <PrimaryButton onClick={this.delete} text="Delete" />
+            <PrimaryButton
+              onClick={this.delete}
+              style={{ backgroundColor: "#d13438", color: "white" }}
+              text="Delete"
+            />
             <DefaultButton onClick={this.hideDialog} text="Cancel" />
           </DialogFooter>
         </Dialog>
@@ -158,7 +162,10 @@ export default class Artists extends React.Component {
           },
           {
             onRender: (item) => (
-              <DefaultButton onClick={() => this.showDialog(item.id)}>
+              <DefaultButton
+                onClick={() => this.showDialog(item.id)}
+                style={{ backgroundColor: "#d13438", color: "white" }}
+              >
                 Delete
               </DefaultButton>
             ),

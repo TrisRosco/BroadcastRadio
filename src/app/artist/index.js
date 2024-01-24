@@ -143,17 +143,30 @@ class Artist extends React.Component {
               this.state.isEmpty.label ? "This field is required" : ""
             }
           />
+        </Stack>
+        <Stack
+          horizontal
+          horizontalAlign="space-between"
+          tokens={{
+            padding: 15,
+          }}
+        >
+          <DefaultButton onClick={this.cancel}>Cancel</DefaultButton>
+
+          {this.state.isNew == false && (
+            <DefaultButton
+              onClick={this.delete}
+              style={{ backgroundColor: '#d13438', color: 'white' }}
+            >
+              Delete
+            </DefaultButton>
+          )}
+
           <PrimaryButton
             onClick={this.state.isNew ? this.saveNew : this.updateArtist}
           >
             Save
           </PrimaryButton>
-
-          {this.state.isNew == false && (
-            <DefaultButton onClick={this.delete}>Delete</DefaultButton>
-          )}
-
-          <DefaultButton onClick={this.cancel}>Cancel</DefaultButton>
         </Stack>
       </div>
     );
