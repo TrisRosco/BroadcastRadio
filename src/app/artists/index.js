@@ -13,7 +13,6 @@ import {
   Stack,
   SearchBox,
 } from "@fluentui/react";
-
 import api from "../api";
 
 export default class Artists extends React.Component {
@@ -159,7 +158,6 @@ export default class Artists extends React.Component {
               onClick={this.delete}
               style={{ backgroundColor: "#d13438", color: "white" }}
               text="Delete"
-              styles={{ root: { width: 100 } }}
             />
             <DefaultButton
               iconProps={{ iconName: "Cancel" }}
@@ -181,6 +179,7 @@ export default class Artists extends React.Component {
     }
 
     return (
+
       <DetailsList
         items={data}
         selectionMode={0}
@@ -189,7 +188,8 @@ export default class Artists extends React.Component {
             key: "name",
             name: "Name",
             fieldName: "name",
-            maxWidth: 100,
+            minWidth: 100,
+            maxWidth: 120,
           },
           {
             key: "description",
@@ -201,6 +201,7 @@ export default class Artists extends React.Component {
             name: "Label",
             fieldName: "label",
           },
+
           {
             onRender: (item) => (
               <DefaultButton
@@ -217,9 +218,11 @@ export default class Artists extends React.Component {
                 onClick={() => this.showDialog(item.id)}
                 style={{ backgroundColor: "#d13438", color: "white" }}
                 text="Delete"
+
               />
             ),
           },
+
         ]}
       />
     );

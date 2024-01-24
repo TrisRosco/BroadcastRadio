@@ -16,7 +16,7 @@ html, body {
 }
 
 .card {
-	width: 900px;
+	min-width: 375px;
 	border-radius: 2px;
 	margin: 10px;
 }

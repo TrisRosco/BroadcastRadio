@@ -85,7 +85,9 @@ const Artist = () => {
 
   return (
     <div className="artist" style={{ boxShadow: theme.effects.elevation8 }}>
-      <Stack tokens={{ childrenGap: 20, padding: 15 }}>
+      
+      <Stack tokens={{ childrenGap: 0, padding: 15 }}>
+      <h1>{isNew ? "Add Artist" : "Edit Artist"}</h1>
         <TextField
           label="Artist Name"
           value={artist.name}
