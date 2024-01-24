@@ -11,7 +11,10 @@ import api from "../api";
 export default class Artists extends React.Component {
   state = {
     hideDialog: true,
-    hideMessageBar: true,
+    messageBar: {
+      isHidden: true,
+      message: "",
+    },
     deletingArtistId: null,
   };
 
