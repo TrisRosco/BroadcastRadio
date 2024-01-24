@@ -1,7 +1,9 @@
-const { Router } = require('express')
+const express = require('express');
+const router = express.Router();
 
-const router = new Router()
+// This line is needed to parse the body of incoming POST requests
+router.use(express.json());
 
-require('./artist')(router)
+require('./artist')(router);
 
 module.exports = router;

@@ -25,19 +25,22 @@ class Artist extends React.Component {
         artist: { name: "", description: "", label: "" },
       });
     } else {
+      // Load the artist from the backend and set it in state
       const artist = await api("/artists/" + artistId);
       this.setState({ artist });
     }
   }
 
+
   change = (field, newValue) => {
-    const artist = Object.assign({}, this.state.artist);
+    const artist = { ...this.state.artist };
 
     artist[field] = newValue;
 
     this.setState({
       artist,
     });
+
   };
 
   updateArtist = async () => {
@@ -49,10 +52,15 @@ class Artist extends React.Component {
         body: artist,
       });
     }
+
+    this.props.navigate("/");
   };
+
 
   saveNew = async () => {
     const { artist } = this.state;
+    console.log(artist);
+    
     await api("/artists", {
       method: "POST",
       body: artist,
@@ -60,6 +68,7 @@ class Artist extends React.Component {
 
     this.props.navigate("/");
   };
+
 
   delete = async () => {
     const { artist } = this.state;
@@ -88,20 +97,20 @@ class Artist extends React.Component {
           <TextField
             label="Artist Name:"
             value={artist.name}
-            onChange={(event, newValue) => this.change("name", newValue)}
+            onChange={(event) => this.change("name", event.target.value)}
             required
           />
           <TextField
             label="Description:"
             value={artist.description}
-            onChange={(event, newValue) => this.change("description", newValue)}
+            onChange={(event) => this.change("description", event.target.value)}
             multiline
             rows={3}
           />
           <TextField
             label="Record label:"
             value={artist.label}
-            onChange={(event, newValue) => this.change("label", newValue)}
+            onChange={(event) => this.change("label", event.target.value)}
             required
           />
           <PrimaryButton
