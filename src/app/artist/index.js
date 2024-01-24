@@ -151,22 +151,27 @@ class Artist extends React.Component {
             padding: 15,
           }}
         >
-          <DefaultButton onClick={this.cancel}>Cancel</DefaultButton>
+          <DefaultButton
+            iconProps={{ iconName: "Cancel" }}
+            onClick={this.cancel}
+            text="Cancel"
+          />
+
 
           {this.state.isNew == false && (
             <DefaultButton
+              iconProps={{ iconName: "Delete" }}
               onClick={this.delete}
-              style={{ backgroundColor: '#d13438', color: 'white' }}
-            >
-              Delete
-            </DefaultButton>
+              style={{ backgroundColor: "#d13438", color: "white" }}
+              text="Delete"
+            />
           )}
 
           <PrimaryButton
+            iconProps={{ iconName: "Save" }}
             onClick={this.state.isNew ? this.saveNew : this.updateArtist}
-          >
-            Save
-          </PrimaryButton>
+            text="Save"
+          />
         </Stack>
       </div>
     );

@@ -5,8 +5,9 @@ import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
 import { DetailsList } from "@fluentui/react/lib/DetailsList";
 import { Dialog, DialogType, DialogFooter } from "@fluentui/react/lib/Dialog";
 import { MessageBar, MessageBarType } from "@fluentui/react";
-import { Stack } from "@fluentui/react/lib/Stack";
-import { SearchBox } from '@fluentui/react/lib/SearchBox';
+import { Stack, IStackProps, IStackStyles } from "@fluentui/react/lib/Stack";
+
+import { SearchBox } from "@fluentui/react/lib/SearchBox";
 
 import api from "../api";
 
@@ -95,17 +96,44 @@ export default class Artists extends React.Component {
     });
   };
 
+  // Search function
+
+  handleSearch = (event) => {
+    // TODO
+  };
+
   render() {
     return (
       <div className="artists_container">
         <Stack
           horizontal
-          horizontalAlign="center"
+          horizontalAlign="space-between"
           tokens={{ childrenGap: 20 }}
+          styles={{
+            root: {
+              padding: 10,
+            },
+          }}
         >
-          <SearchBox placeholder="Search" underlined={true} />
+          <SearchBox
+            placeholder="Search"
+            onChange={this.handleSearch}
+            underlined={true}
+            styles={{
+              root: {
+                width: 500
+              },
+            }}
+          />
           <NavLink to="/artists/new">
-            <PrimaryButton text="Add Artist" id="add_artist_button" />
+            <PrimaryButton
+              iconProps={{ iconName: "Add" }}
+              text="Add Artist"
+              id="add_artist_button"
+              style={{
+
+              }}
+            />
           </NavLink>
         </Stack>
         {this.renderList()}
@@ -123,11 +151,17 @@ export default class Artists extends React.Component {
         >
           <DialogFooter>
             <PrimaryButton
+              iconProps={{ iconName: "Delete" }}
               onClick={this.delete}
               style={{ backgroundColor: "#d13438", color: "white" }}
               text="Delete"
+              styles={ { root: { width: 100 } } }
             />
-            <DefaultButton onClick={this.hideDialog} text="Cancel" />
+            <DefaultButton
+              iconProps={{ iconName: "Cancel" }}
+              onClick={this.hideDialog}
+              text="Cancel"
+            />
           </DialogFooter>
         </Dialog>
         {this.renderMessageBar()}
@@ -165,17 +199,21 @@ export default class Artists extends React.Component {
           },
           {
             onRender: (item) => (
-              <DefaultButton href={"/artists/" + item.id}>Edit</DefaultButton>
+              <DefaultButton
+                iconProps={{ iconName: "Edit" }}
+                href={"/artists/" + item.id}
+                text="Edit"
+              />
             ),
           },
           {
             onRender: (item) => (
               <DefaultButton
+                iconProps={{ iconName: "Delete" }}
                 onClick={() => this.showDialog(item.id)}
                 style={{ backgroundColor: "#d13438", color: "white" }}
-              >
-                Delete
-              </DefaultButton>
+                text="Delete"
+              />
             ),
           },
         ]}
