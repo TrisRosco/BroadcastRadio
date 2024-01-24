@@ -1,13 +1,18 @@
 import React from "react";
 import "./style.css";
 import { NavLink } from "react-router-dom";
-import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
-import { DetailsList } from "@fluentui/react/lib/DetailsList";
-import { Dialog, DialogType, DialogFooter } from "@fluentui/react/lib/Dialog";
-import { MessageBar, MessageBarType } from "@fluentui/react";
-import { Stack, IStackProps, IStackStyles } from "@fluentui/react/lib/Stack";
-
-import { SearchBox } from "@fluentui/react/lib/SearchBox";
+import {
+  DefaultButton,
+  PrimaryButton,
+  DetailsList,
+  Dialog,
+  DialogType,
+  DialogFooter,
+  MessageBar,
+  MessageBarType,
+  Stack,
+  SearchBox,
+} from "@fluentui/react";
 
 import api from "../api";
 
@@ -100,6 +105,7 @@ export default class Artists extends React.Component {
 
   handleSearch = (event) => {
     // TODO
+
   };
 
   render() {
@@ -121,7 +127,7 @@ export default class Artists extends React.Component {
             underlined={true}
             styles={{
               root: {
-                width: 500
+                width: 500,
               },
             }}
           />
@@ -130,9 +136,7 @@ export default class Artists extends React.Component {
               iconProps={{ iconName: "Add" }}
               text="Add Artist"
               id="add_artist_button"
-              style={{
-
-              }}
+              style={{}}
             />
           </NavLink>
         </Stack>
@@ -155,7 +159,7 @@ export default class Artists extends React.Component {
               onClick={this.delete}
               style={{ backgroundColor: "#d13438", color: "white" }}
               text="Delete"
-              styles={ { root: { width: 100 } } }
+              styles={{ root: { width: 100 } }}
             />
             <DefaultButton
               iconProps={{ iconName: "Cancel" }}

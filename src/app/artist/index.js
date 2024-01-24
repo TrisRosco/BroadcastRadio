@@ -1,181 +1,143 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
-import { withParams, withNavigate } from "../router-utils";
-import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
-import { TextField } from "@fluentui/react/lib/TextField";
-import { Stack, IStackProps, IStackStyles } from "@fluentui/react/lib/Stack";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  DefaultButton,
+  PrimaryButton,
+  TextField,
+  Stack,
+} from "@fluentui/react";
 import { getTheme } from "@fluentui/react";
 
 import api from "../api";
 
 const theme = getTheme();
 
-class Artist extends React.Component {
-  state = {
-    isNew: false,
-    isEmpty: {
-      name: false,
-      label: false,
-    },
+const Artist = () => {
+  const [artist, setArtist] = useState(null);
+  const [isNew, setIsNew] = useState(false);
+  const [isEmpty, setIsEmpty] = useState({
+    name: false,
+    label: false,
+  });
+
+  const params = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadArtist = async () => {
+      if (params.id === "new") {
+        setIsNew(true);
+        setArtist({ name: "", description: "", label: "" });
+      } else {
+        const artistData = await api("/artists/" + params.id);
+        setArtist(artistData);
+      }
+    };
+
+    loadArtist();
+  }, [params.id]);
+
+  const change = (field, newValue) => {
+    setArtist((prevArtist) => ({ ...prevArtist, [field]: newValue }));
   };
 
-  async componentDidMount() {
-    const { id: artistId } = this.props.params;
-
-    if (artistId === "new") {
-      // Initialize state for a new artist
-      this.setState({
-        isNew: true,
-        artist: { name: "", description: "", label: "" },
-      });
-    } else {
-      // Load the artist from the backend and set it in state
-      const artist = await api("/artists/" + artistId);
-      this.setState({ artist });
-    }
-  }
-
-  change = (field, newValue) => {
-    const artist = { ...this.state.artist };
-
-    artist[field] = newValue;
-
-    this.setState({
-      artist,
-    });
-  };
-
-  updateArtist = async () => {
-    const { artist } = this.state;
-
-    this.checkFields();
+  const saveOrUpdateArtist = async () => {
+    checkFields();
 
     if (!artist.name || !artist.label) {
       return;
     }
 
-    if (artist.id) {
+    if (isNew) {
+      await api("/artists", {
+        method: "POST",
+        body: artist,
+      });
+    } else {
       await api("/artists/" + artist.id, {
         method: "PUT",
         body: artist,
       });
     }
 
-    this.props.navigate("/");
+    navigate("/");
   };
 
-  saveNew = async () => {
-    const { artist } = this.state;
-
-    this.checkFields();
-
-    if (!artist.name || !artist.label) {
-      return;
-    }
-
-    await api("/artists", {
-      method: "POST",
-      body: artist,
+  const checkFields = () => {
+    setIsEmpty({
+      name: !artist.name,
+      label: !artist.label,
     });
-
-    this.props.navigate("/");
   };
 
-  checkFields = () => {
-    const { artist } = this.state;
-
-    if (!artist.name || !artist.label) {
-      this.setState({
-        isEmpty: {
-          name: !artist.name,
-          label: !artist.label,
-        },
-      });
-    }
-  };
-
-  delete = async () => {
-    const { artist } = this.state;
-
+  const deleteArtist = async () => {
     if (artist.id) {
       await api("/artists/" + artist.id, {
         method: "DELETE",
       });
     }
 
-    this.props.navigate("/");
+    navigate("/");
   };
 
-  cancel = () => {
-    this.props.navigate("/");
-  };
+  if (!artist) return null;
 
-  render() {
-    const { artist } = this.state;
+  return (
+    <div className="artist" style={{ boxShadow: theme.effects.elevation8 }}>
+      <Stack tokens={{ childrenGap: 20 }}>
+        <TextField
+          label="Artist Name:"
+          value={artist.name}
+          onChange={(event) => change("name", event.target.value)}
+          required
+          errorMessage={isEmpty.name ? "This field is required" : ""}
+        />
+        <TextField
+          label="Description:"
+          value={artist.description}
+          onChange={(event) => change("description", event.target.value)}
+          multiline
+          rows={3}
+        />
+        <TextField
+          label="Record label:"
+          value={artist.label}
+          onChange={(event) => change("label", event.target.value)}
+          required
+          errorMessage={isEmpty.label ? "This field is required" : ""}
+        />
+      </Stack>
+      <Stack
+        horizontal
+        horizontalAlign="space-between"
+        tokens={{
+          padding: 15,
+        }}
+      >
+        <DefaultButton
+          iconProps={{ iconName: "Cancel" }}
+          onClick={() => navigate("/")}
+          text="Cancel"
+        />
 
-    if (!artist) return null;
-
-    return (
-      <div className="artist" style={{ boxShadow: theme.effects.elevation8 }}>
-        <Stack tokens={{ childrenGap: 20 }}>
-          <TextField
-            label="Artist Name:"
-            value={artist.name}
-            onChange={(event) => this.change("name", event.target.value)}
-            required
-            errorMessage={
-              this.state.isEmpty.name ? "This field is required" : ""
-            }
-          />
-          <TextField
-            label="Description:"
-            value={artist.description}
-            onChange={(event) => this.change("description", event.target.value)}
-            multiline
-            rows={3}
-          />
-          <TextField
-            label="Record label:"
-            value={artist.label}
-            onChange={(event) => this.change("label", event.target.value)}
-            required
-            errorMessage={
-              this.state.isEmpty.label ? "This field is required" : ""
-            }
-          />
-        </Stack>
-        <Stack
-          horizontal
-          horizontalAlign="space-between"
-          tokens={{
-            padding: 15,
-          }}
-        >
+        {!isNew && (
           <DefaultButton
-            iconProps={{ iconName: "Cancel" }}
-            onClick={this.cancel}
-            text="Cancel"
+            iconProps={{ iconName: "Delete" }}
+            onClick={deleteArtist}
+            style={{ backgroundColor: "#d13438", color: "white" }}
+            text="Delete"
           />
+        )}
 
+        <PrimaryButton
+          iconProps={{ iconName: "Save" }}
+          onClick={saveOrUpdateArtist}
+          text="Save"
+        />
+      </Stack>
+    </div>
+  );
+};
 
-          {this.state.isNew == false && (
-            <DefaultButton
-              iconProps={{ iconName: "Delete" }}
-              onClick={this.delete}
-              style={{ backgroundColor: "#d13438", color: "white" }}
-              text="Delete"
-            />
-          )}
-
-          <PrimaryButton
-            iconProps={{ iconName: "Save" }}
-            onClick={this.state.isNew ? this.saveNew : this.updateArtist}
-            text="Save"
-          />
-        </Stack>
-      </div>
-    );
-  }
-}
-
-export default withNavigate(withParams(Artist));
+export default Artist;
