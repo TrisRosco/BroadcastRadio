@@ -85,23 +85,23 @@ const Artist = () => {
 
   return (
     <div className="artist" style={{ boxShadow: theme.effects.elevation8 }}>
-      <Stack tokens={{ childrenGap: 20 }}>
+      <Stack tokens={{ childrenGap: 20, padding: 15 }}>
         <TextField
-          label="Artist Name:"
+          label="Artist Name"
           value={artist.name}
           onChange={(event) => change("name", event.target.value)}
           required
           errorMessage={isEmpty.name ? "This field is required" : ""}
         />
         <TextField
-          label="Description:"
+          label="Description"
           value={artist.description}
           onChange={(event) => change("description", event.target.value)}
           multiline
           rows={3}
         />
         <TextField
-          label="Record label:"
+          label="Record label"
           value={artist.label}
           onChange={(event) => change("label", event.target.value)}
           required
