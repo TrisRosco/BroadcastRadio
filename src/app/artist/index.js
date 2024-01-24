@@ -30,7 +30,6 @@ class Artist extends React.Component {
     }
   }
 
-
   render() {
     const { artist } = this.state;
 
@@ -45,7 +44,6 @@ class Artist extends React.Component {
             onChange={(event, newValue) => this.change("name", newValue)}
             required
           />
-
           <TextField
             label="Description:"
             value={artist.description}
@@ -53,16 +51,18 @@ class Artist extends React.Component {
             multiline
             rows={3}
           />
-
           <TextField
             label="Record label:"
             value={artist.label}
             onChange={(event, newValue) => this.change("label", newValue)}
             required
           />
-
           <PrimaryButton onClick={this.save}>Save</PrimaryButton>
-          <DefaultButton onClick={this.delete}>Delete</DefaultButton>
+
+          {this.state.isNew == false && (
+            <DefaultButton onClick={this.delete}>Delete</DefaultButton>
+          )}
+
           <DefaultButton onClick={this.cancel}>Cancel</DefaultButton>
         </Stack>
       </div>
