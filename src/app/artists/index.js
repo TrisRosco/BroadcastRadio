@@ -28,7 +28,6 @@ export default class Artists extends React.Component {
     });
   }
 
-  
   delete = async () => {
     try {
       await api("/artists/" + this.state.deletingArtistId, {
@@ -119,6 +118,7 @@ export default class Artists extends React.Component {
             <DefaultButton onClick={this.hideDialog} text="Cancel" />
           </DialogFooter>
         </Dialog>
+        {this.renderMessageBar()}
       </div>
     );
   }
