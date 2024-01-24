@@ -2,6 +2,8 @@ const express = require("express");
 
 const { Artist } = require("../../database");
 
+express.json();
+
 module.exports = function (router) {
   /**
    * List artists
@@ -25,11 +27,7 @@ module.exports = function (router) {
    * Create a new artist
    */
   router.post("/artists", async function (req, res) {
-    const artist = await Artist.create({
-      name: req.body.name,
-      description: req.body.description,
-      label: req.body.label,
-    });
+    const artist = await Artist.create(req.body);
 
     console.log(artist);
 
