@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-// This line is needed to parse the body of incoming POST requests
-router.use(express.json());
+router.use(express.json()); // This line took me hours to figure out. At least I learned something new!
 
 require('./artist')(router);
 
