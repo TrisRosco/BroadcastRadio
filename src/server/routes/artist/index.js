@@ -13,7 +13,9 @@ module.exports = function (router) {
       const artists = await Artist.findAll();
       res.json(artists);
     } catch (err) {
-      res.status(500).json({ message: "Error fetching artists", error: err.message });
+      res
+        .status(500)
+        .json({ message: "Error fetching artists", error: err.message });
     }
   });
 
@@ -28,20 +30,27 @@ module.exports = function (router) {
       }
       res.json(artist);
     } catch (err) {
-      res.status(500).json({ message: "Error fetching artist", error: err.message });
+      res
+        .status(500)
+        .json({ message: "Error fetching artist", error: err.message });
     }
   });
-
 
   /**
    * Create a new artist
    */
   router.post("/artists", async function (req, res) {
     try {
+      // Backend validation in case the frontend validation fails
+      if (!req.body.name || !req.body.label) {
+        return res.status(400).json({ message: "Missing required fields" });
+      }
       const artist = await Artist.create(req.body);
       res.status(201).json({ message: "Artist created. ID: ", artist });
     } catch (err) {
-      res.status(500).json({ message: "Error creating artist", error: err.message });
+      res
+        .status(500)
+        .json({ message: "Error creating artist", error: err.message });
     }
   });
 
@@ -55,10 +64,16 @@ module.exports = function (router) {
       if (!artist) {
         return res.status(404).json({ message: "Artist not found" });
       }
+      // Backend validation in case the frontend validation fails
+      if (!req.body.name || !req.body.label) {
+        return res.status(400).json({ message: "Missing required fields" });
+      }
       await artist.update(req.body);
       res.status(200).json({ message: "Artist updated. ID: ", artist });
     } catch (err) {
-      res.status(500).json({ message: "Error updating artist", error: err.message });
+      res
+        .status(500)
+        .json({ message: "Error updating artist", error: err.message });
     }
   });
 
@@ -75,7 +90,9 @@ module.exports = function (router) {
       await artist.destroy();
       res.status(200).json({ message: "Artist deleted. ID: ", deletedArtist });
     } catch (err) {
-      res.status(500).json({ message: "Error deleting artist", error: err.message });
+      res
+        .status(500)
+        .json({ message: "Error deleting artist", error: err.message });
     }
   });
 };
