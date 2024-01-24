@@ -4,12 +4,14 @@ import { NavLink } from "react-router-dom";
 import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
 import { DetailsList } from "@fluentui/react/lib/DetailsList";
 import { Dialog, DialogType, DialogFooter } from "@fluentui/react/lib/Dialog";
+import { MessageBar, MessageBarType } from "@fluentui/react";
 
 import api from "../api";
 
 export default class Artists extends React.Component {
   state = {
     hideDialog: true,
+    hideMessageBar: true,
     deletingArtistId: null,
   };
 
