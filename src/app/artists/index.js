@@ -104,7 +104,6 @@ export default class Artists extends React.Component {
 
   handleSearch = (event) => {
     // TODO
-
   };
 
   render() {
@@ -113,7 +112,7 @@ export default class Artists extends React.Component {
         <Stack
           horizontal
           horizontalAlign="space-between"
-          tokens={{ childrenGap: 20 }}
+          tokens={{ childrenGap: 10 }}
           styles={{
             root: {
               padding: 10,
@@ -179,7 +178,6 @@ export default class Artists extends React.Component {
     }
 
     return (
-
       <DetailsList
         items={data}
         selectionMode={0}
@@ -218,11 +216,9 @@ export default class Artists extends React.Component {
                 onClick={() => this.showDialog(item.id)}
                 style={{ backgroundColor: "#d13438", color: "white" }}
                 text="Delete"
-
               />
             ),
           },
-
         ]}
       />
     );
