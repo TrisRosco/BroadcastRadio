@@ -102,11 +102,21 @@ export default class Artists extends React.Component {
 
   // Filter function
   handleFilter = (event) => {
+    // Prevents an error when the user clears the search box
+    if (!event || !event.target) {
+      return;
+    }
+
     const { value } = event.target;
     const { data } = this.state;
     const filteredData = data.filter((artist) => {
-      return artist.name.toLowerCase().includes(value.toLowerCase());
+      return (
+        artist.name.toLowerCase().includes(value.toLowerCase()) ||
+        artist.description.toLowerCase().includes(value.toLowerCase()) ||
+        artist.label.toLowerCase().includes(value.toLowerCase())
+      );
     });
+
     this.setState({ data: filteredData });
 
     if (value === "") {
@@ -130,6 +140,7 @@ export default class Artists extends React.Component {
           <SearchBox
             placeholder="Search"
             onChange={this.handleFilter}
+            onClear={() => this.componentDidMount()} // Resets the list when the user clears the search box
             underlined={true}
             styles={{
               root: {
