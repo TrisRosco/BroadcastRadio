@@ -43,6 +43,7 @@ const Artist = () => {
     loadArtist();
   }, [params.id]);
 
+  // Update the useState when the user types in the input fields
   const handleChange = (fieldName, newValue) => {
     const currentArtist = artist;
 
@@ -50,10 +51,18 @@ const Artist = () => {
       ...currentArtist,
       [fieldName]: newValue,
     };
-
     setArtist(updatedArtist);
   };
 
+  const handlePhotoChange = (event) => {
+    const currentArtist = artist;
+
+    const updatedArtist = {
+      ...currentArtist,
+      artistImage: event.target.files[0],
+    };
+    setArtist(updatedArtist);
+  };
 
   const saveOrUpdateArtist = async () => {
     // Check if the required fields are filled
@@ -124,22 +133,22 @@ const Artist = () => {
           errorMessage={isEmpty.label ? "This field is required" : ""}
         />
 
-        TODO: Add image upload
-        {/* <Label>Artist Image</Label>
+
+        <Label>Artist Image</Label>
         <form
           label="Test"
           action="/upload"
           method="post"
           encType="multipart/form-data"
         >
-          <input type="file" name="artistImage" onChange={handlePhotoUpload} />
+          <input type="file" name="artistImage" onChange={handlePhotoChange} />
         </form>
         <Text
           variant="small"
           styles={{ root: { color: theme.palette.neutralSecondary } }}
         >
           Max file size: 1MB
-        </Text> */}
+        </Text>
       </Stack>
       <Stack
         horizontal

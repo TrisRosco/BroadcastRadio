@@ -22,7 +22,9 @@ const Artist =
     label: {
       type: DataTypes.STRING,
     },
-    
+    artistImage: {
+      type: DataTypes.STRING,
+    },
   });
 
 if (isFirstConnection) {
@@ -32,23 +34,27 @@ if (isFirstConnection) {
         name: "James Blunt",
         label: "Periscope",
         description: "Some fella with a guitar",
+        artistImage: "",
       },
       {
         name: "The Beatles",
         label: "Apple",
         description:
           "A bunch of guys from liverpool, they did okay. Pretty obscure though.",
+        artistImage: "",
       },
       {
         name: "The Rolling Stones",
         label: "Decca",
         description:
           "Fun fact: They're not actually related to any rock formations.",
+        artistImage: "",
       },
       {
         name: "Arianna Grande",
         label: "Republic",
         description: "Ironically, she's actually quite short.",
+        artistImage: "",
       },
     ]);
   });
