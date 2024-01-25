@@ -5,6 +5,7 @@ const { Artist } = require("../../database");
 const multer  = require('multer')
 
 // Multer configuration
+// This is where I got the code from: https://www.npmjs.com/package/multer and adapted it 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'src/server/image/')
@@ -33,6 +34,8 @@ const upload = multer({ storage: storage })
 
 express.json();
 
+
+// Try/Catch blocks for error handling. This might be somewhat excessive, but I wanted to make sure that I was handling errors properly.
 
 module.exports = function (router) {
   /**

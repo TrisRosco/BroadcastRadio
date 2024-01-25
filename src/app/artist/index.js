@@ -33,7 +33,7 @@ const Artist = () => {
     const loadArtist = async () => {
       if (params.id === "new") {
         setIsNew(true);
-        setArtist({ name: "", description: "", label: "", artistImage: null });
+        setArtist({ name: "", description: "", label: "", artistImage: "" });
       } else {
         const artistData = await api("/artists/" + params.id);
         setArtist(artistData);
@@ -54,6 +54,7 @@ const Artist = () => {
     setArtist(updatedArtist);
   };
 
+  // Update the useState when the user uploads a photo
   const handlePhotoChange = (event) => {
     if (checkPhoto(event)) {
       const currentArtist = artist;
@@ -94,6 +95,7 @@ const Artist = () => {
     navigate("/");
   };
 
+  // Check if the required fields are filled
   const checkFields = () => {
     setIsEmpty({
       name: !artist.name,
@@ -101,6 +103,7 @@ const Artist = () => {
     });
   };
 
+  // Check if the photo is valid 
   const checkPhoto = (event) => {
     if (
       event.target.files[0].size > 1000000 ||

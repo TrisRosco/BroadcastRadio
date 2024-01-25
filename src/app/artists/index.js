@@ -82,9 +82,9 @@ export default class Artists extends React.Component {
       return null;
     }
 
-    // Jsx for the message bar
     return (
       <MessageBar
+      // If the message includes the word "Error", the message bar will be red, otherwise it will be green
         messageBarType={
           message.includes("Error")
             ? MessageBarType.error

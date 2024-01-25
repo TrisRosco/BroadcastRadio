@@ -23,6 +23,7 @@ const Artist =
       type: DataTypes.STRING,
       allowNull: false,
     },
+    // Artist image is a string because we're just storing a URL
     artistImage: {
       type: DataTypes.STRING,
     },
