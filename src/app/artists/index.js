@@ -25,7 +25,6 @@ export default class Artists extends React.Component {
     deletingArtistId: null,
   };
 
-  // a bit like useEffect
   async componentDidMount() {
     // load the artists from the backend
     const data = await api("/artists");
@@ -42,6 +41,8 @@ export default class Artists extends React.Component {
       });
 
       const data = await api("/artists");
+
+      // Update the state hide the dialog and show the message bar
       this.setState({
         data,
         hideDialog: true,
@@ -51,10 +52,10 @@ export default class Artists extends React.Component {
           message: "Artist deleted successfully.",
         },
       });
-
       setTimeout(() => this.hideMessageBar(), 3000);
-    } catch (error) {
+
       // Handle error scenario
+    } catch (error) {
       this.setState({
         messageBar: {
           isHidden: false,
@@ -81,9 +82,14 @@ export default class Artists extends React.Component {
       return null;
     }
 
+    // Jsx for the message bar
     return (
       <MessageBar
-        messageBarType={MessageBarType.success}
+        messageBarType={
+          message.includes("Error")
+            ? MessageBarType.error
+            : MessageBarType.success
+        }
         isMultiline={false}
         onDismiss={this.hideMessageBar}
         dismissButtonAriaLabel="Close"
@@ -107,9 +113,12 @@ export default class Artists extends React.Component {
       return;
     }
 
+    // Filter the data based on the search box value
     const { value } = event.target;
     const { data } = this.state;
+
     const filteredData = data.filter((artist) => {
+      // Go through all the artist properties and check if they include the search box value
       return (
         artist.name.toLowerCase().includes(value.toLowerCase()) ||
         artist.description.toLowerCase().includes(value.toLowerCase()) ||

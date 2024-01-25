@@ -21,10 +21,13 @@ const Artist = () => {
     label: false,
   });
 
+  // Get the id from the url
   const params = useParams();
+
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Load the artist or set a new one
     const loadArtist = async () => {
       if (params.id === "new") {
         setIsNew(true);
@@ -38,11 +41,19 @@ const Artist = () => {
     loadArtist();
   }, [params.id]);
 
-  const change = (field, newValue) => {
-    setArtist((prevArtist) => ({ ...prevArtist, [field]: newValue }));
+  const handleChange = (fieldName, newValue) => {
+    const currentArtist = artist;
+
+    const updatedArtist = {
+      ...currentArtist,
+      [fieldName]: newValue,
+    };
+
+    setArtist(updatedArtist);
   };
 
   const saveOrUpdateArtist = async () => {
+    // Check if the required fields are filled
     checkFields();
 
     if (!artist.name || !artist.label) {
@@ -64,12 +75,14 @@ const Artist = () => {
     navigate("/");
   };
 
+  
   const checkFields = () => {
     setIsEmpty({
       name: !artist.name,
       label: !artist.label,
     });
   };
+
 
   const deleteArtist = async () => {
     if (artist.id) {
@@ -81,34 +94,31 @@ const Artist = () => {
     navigate("/");
   };
 
-  if (!artist) return null;
+  // If the artist is not loaded yet, don't render anything
+  if (!artist) return null; 
 
   return (
     <div className="artist" style={{ boxShadow: theme.effects.elevation8 }}>
-      <Stack
-        tokens={{ childrenGap: 0, padding: 15 }}
-      >
-        <h1
-        className="artist_title"
-        >{isNew ? "Add Artist" : "Edit Artist"}</h1>
+      <Stack tokens={{ childrenGap: 0, padding: 15 }}>
+        <h1 className="artist_title">{isNew ? "Add Artist" : "Edit Artist"}</h1>
         <TextField
           label="Artist Name"
           value={artist.name}
-          onChange={(event) => change("name", event.target.value)}
+          onChange={(event) => handleChange("name", event.target.value)}
           required
           errorMessage={isEmpty.name ? "This field is required" : ""}
         />
         <TextField
           label="Description"
           value={artist.description}
-          onChange={(event) => change("description", event.target.value)}
+          onChange={(event) => handleChange("description", event.target.value)}
           multiline
           rows={3}
         />
         <TextField
           label="Record label"
           value={artist.label}
-          onChange={(event) => change("label", event.target.value)}
+          onChange={(event) => handleChange("label", event.target.value)}
           required
           errorMessage={isEmpty.label ? "This field is required" : ""}
         />
