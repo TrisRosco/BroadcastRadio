@@ -4,20 +4,20 @@ const { Artist } = require("../../database");
 
 const multer  = require('multer')
 
-// hand to follow a tutorial for this part 
-// https://www.youtube.com/watch?v=wIOpe8S2Mk8
-
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'src/server/images/')
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname)
-    }
-  })
+  destination: function (req, file, cb) {
+    cb(null, 'src/server/image/')
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, file.fieldname + '-' + uniqueSuffix)
+  },
+  files: 1, 
+  fileSize: 1024000,
+
+})
 
 const upload = multer({ storage: storage })
-
 
 express.json();
 

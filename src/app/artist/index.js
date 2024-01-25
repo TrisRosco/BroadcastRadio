@@ -6,6 +6,8 @@ import {
   PrimaryButton,
   TextField,
   Stack,
+  Label,
+  Text,
 } from "@fluentui/react";
 import { getTheme } from "@fluentui/react";
 
@@ -16,6 +18,7 @@ const theme = getTheme();
 const Artist = () => {
   const [artist, setArtist] = useState(null);
   const [isNew, setIsNew] = useState(false);
+  const [photo, setPhoto] = useState(null);
   const [isEmpty, setIsEmpty] = useState({
     name: false,
     label: false,
@@ -54,8 +57,8 @@ const Artist = () => {
 
   // Handle the file upload
 
-  const handleFileChange = (userPhoto) => {
-    TODO: "Handle the file upload";
+  const handlePhotoChange = (event) => {
+    setPhoto(event.target.files[0]);
   };
 
   const saveOrUpdateArtist = async () => {
@@ -81,14 +84,12 @@ const Artist = () => {
     navigate("/");
   };
 
-  
   const checkFields = () => {
     setIsEmpty({
       name: !artist.name,
       label: !artist.label,
     });
   };
-
 
   const deleteArtist = async () => {
     if (artist.id) {
@@ -100,9 +101,8 @@ const Artist = () => {
     navigate("/");
   };
 
-
   // If the artist is not loaded yet, don't render anything
-  if (!artist) return null; 
+  if (!artist) return null;
 
   return (
     <div className="artist" style={{ boxShadow: theme.effects.elevation8 }}>
@@ -130,14 +130,21 @@ const Artist = () => {
           errorMessage={isEmpty.label ? "This field is required" : ""}
         />
 
-        <form action="/upload" method="post" encType="multipart/form-data">
-          <input
-            type="file"
-            name="artistImage"
-            onChange={ handleFileChange }
-          />
+        <Label>Artist Image</Label>
+        <form
+          label="Test"
+          action="/upload"
+          method="post"
+          encType="multipart/form-data"
+        >
+          <input type="file" name="artistImage" onChange={handlePhotoChange} />
         </form>
-
+        <Text
+          variant="small"
+          styles={{ root: { color: theme.palette.neutralSecondary } }}
+        >
+          Max file size: 1MB
+        </Text>
       </Stack>
       <Stack
         horizontal

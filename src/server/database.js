@@ -22,6 +22,9 @@ const Artist =
     label: {
       type: DataTypes.STRING,
     },
+    artistImage: {
+      type: DataTypes.STRING,
+    },
   });
 
 FIXME: // This is so janky but I wanted more dummy data. Please don't throw rocks at me.
