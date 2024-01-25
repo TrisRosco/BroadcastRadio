@@ -25,7 +25,7 @@ function fileFilter (req, file, cb) {
   if (file.mimetype === 'image/jpeg') {
     cb(null, true)
   } else {
-    return cb(new Error('Only .jpg and .jpeg supported'))
+    return cb(new Error('Only .jpg supported'))
   }
 }
 

@@ -33,7 +33,7 @@ const Artist = () => {
     const loadArtist = async () => {
       if (params.id === "new") {
         setIsNew(true);
-        setArtist({ name: "", description: "", label: "" });
+        setArtist({ name: "", description: "", label: "", artistImage: null });
       } else {
         const artistData = await api("/artists/" + params.id);
         setArtist(artistData);
@@ -69,6 +69,8 @@ const Artist = () => {
     }
   };
 
+
+  // TODO: Refactor to account for new artistImage field
   const saveOrUpdateArtist = async () => {
     // Check if the required fields are filled
     checkFields();
@@ -162,6 +164,8 @@ const Artist = () => {
           styles={{ root: { color: theme.palette.neutralSecondary } }}
         >
           Max file size: 1MB
+          <br />
+          File type: .jpg
         </Text>
       </Stack>
       <Stack

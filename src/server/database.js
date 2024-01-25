@@ -21,6 +21,7 @@ const Artist =
     },
     label: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     artistImage: {
       type: DataTypes.STRING,
