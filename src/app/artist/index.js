@@ -55,13 +55,19 @@ const Artist = () => {
   };
 
   const handlePhotoChange = (event) => {
-    const currentArtist = artist;
+    if (!checkPhoto()) {
+      const currentArtist = artist;
 
-    const updatedArtist = {
-      ...currentArtist,
-      artistImage: event.target.files[0],
-    };
-    setArtist(updatedArtist);
+      const updatedArtist = {
+        ...currentArtist,
+        artistImage: event.target.files[0],
+      };
+      setArtist(updatedArtist);
+    } else {
+      // clear the file input
+      event.target.value = null;
+      alert("Invalid file type or size");
+    }
   };
 
   const saveOrUpdateArtist = async () => {
@@ -87,11 +93,23 @@ const Artist = () => {
     navigate("/");
   };
 
+  // Check if the required fields are filled
   const checkFields = () => {
     setIsEmpty({
       name: !artist.name,
       label: !artist.label,
     });
+  };
+
+  // Check if the photo is valid
+  const checkPhoto = () => {
+    if (
+      artist.artistImage.type !== "image/jpeg" ||
+      artist.artistImage.size > 1024000
+    ) {
+      return false;
+    }
+    return true;
   };
 
   const deleteArtist = async () => {
@@ -132,7 +150,6 @@ const Artist = () => {
           required
           errorMessage={isEmpty.label ? "This field is required" : ""}
         />
-
 
         <Label>Artist Image</Label>
         <form
