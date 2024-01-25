@@ -52,6 +52,12 @@ const Artist = () => {
     setArtist(updatedArtist);
   };
 
+  // Handle the file upload
+
+  const handleFileChange = (userPhoto) => {
+    TODO: "Handle the file upload";
+  };
+
   const saveOrUpdateArtist = async () => {
     // Check if the required fields are filled
     checkFields();
@@ -94,6 +100,7 @@ const Artist = () => {
     navigate("/");
   };
 
+
   // If the artist is not loaded yet, don't render anything
   if (!artist) return null; 
 
@@ -122,6 +129,15 @@ const Artist = () => {
           required
           errorMessage={isEmpty.label ? "This field is required" : ""}
         />
+
+        <form action="/upload" method="post" encType="multipart/form-data">
+          <input
+            type="file"
+            name="artistImage"
+            onChange={ handleFileChange }
+          />
+        </form>
+
       </Stack>
       <Stack
         horizontal

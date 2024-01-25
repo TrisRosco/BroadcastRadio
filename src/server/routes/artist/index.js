@@ -2,7 +2,25 @@ const express = require("express");
 
 const { Artist } = require("../../database");
 
+const multer  = require('multer')
+
+// hand to follow a tutorial for this part 
+// https://www.youtube.com/watch?v=wIOpe8S2Mk8
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'src/server/images/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+  })
+
+const upload = multer({ storage: storage })
+
+
 express.json();
+
 
 module.exports = function (router) {
   /**
@@ -39,7 +57,7 @@ module.exports = function (router) {
   /**
    * Create a new artist
    */
-  router.post("/artists", async function (req, res) {
+  router.post("/artists", upload.single('artistImage'), async function (req, res) {
     try {
       // Backend validation in case the frontend validation fails
       if (!req.body.name || !req.body.label) {
