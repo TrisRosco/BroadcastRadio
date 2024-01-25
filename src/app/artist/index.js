@@ -8,6 +8,8 @@ import {
   Stack,
   Label,
   Text,
+  MessageBar,
+  MessageBarType,
 } from "@fluentui/react";
 import { getTheme } from "@fluentui/react";
 
@@ -164,7 +166,9 @@ const Artist = () => {
           variant="small"
           styles={{ root: { color: theme.palette.neutralSecondary } }}
         >
-          Max file size: 1MB
+          Format: .jpg
+          <br />
+          Max size: 1Mb
         </Text>
       </Stack>
       <Stack
