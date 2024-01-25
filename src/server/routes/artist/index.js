@@ -4,6 +4,7 @@ const { Artist } = require("../../database");
 
 const multer  = require('multer')
 
+// Multer configuration
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'src/server/image/')
@@ -14,8 +15,19 @@ const storage = multer.diskStorage({
   },
   files: 1, 
   fileSize: 1024000,
+  fileFilter: fileFilter
 
 })
+
+// Back end validation for file type
+function fileFilter (req, file, cb) {
+
+  if (file.mimetype === 'image/jpeg') {
+    cb(null, true)
+  } else {
+    return cb(new Error('Only .jpg and .jpeg supported'))
+  }
+}
 
 const upload = multer({ storage: storage })
 
@@ -76,7 +88,7 @@ module.exports = function (router) {
    * Update an artist
    */
 
-  router.put("/artists/:id", async function (req, res) {
+  router.put("/artists/:id", upload.single('artistImage'), async function (req, res) {
     try {
       const artist = await Artist.findByPk(req.params.id);
       if (!artist) {

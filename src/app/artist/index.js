@@ -18,7 +18,6 @@ const theme = getTheme();
 const Artist = () => {
   const [artist, setArtist] = useState(null);
   const [isNew, setIsNew] = useState(false);
-  const [photo, setPhoto] = useState(null);
   const [isEmpty, setIsEmpty] = useState({
     name: false,
     label: false,
@@ -55,11 +54,6 @@ const Artist = () => {
     setArtist(updatedArtist);
   };
 
-  // Handle the file upload
-
-  const handlePhotoChange = (event) => {
-    setPhoto(event.target.files[0]);
-  };
 
   const saveOrUpdateArtist = async () => {
     // Check if the required fields are filled
@@ -130,21 +124,22 @@ const Artist = () => {
           errorMessage={isEmpty.label ? "This field is required" : ""}
         />
 
-        <Label>Artist Image</Label>
+        TODO: Add image upload
+        {/* <Label>Artist Image</Label>
         <form
           label="Test"
           action="/upload"
           method="post"
           encType="multipart/form-data"
         >
-          <input type="file" name="artistImage" onChange={handlePhotoChange} />
+          <input type="file" name="artistImage" onChange={handlePhotoUpload} />
         </form>
         <Text
           variant="small"
           styles={{ root: { color: theme.palette.neutralSecondary } }}
         >
           Max file size: 1MB
-        </Text>
+        </Text> */}
       </Stack>
       <Stack
         horizontal

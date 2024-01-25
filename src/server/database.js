@@ -22,40 +22,35 @@ const Artist =
     label: {
       type: DataTypes.STRING,
     },
-    artistImage: {
-      type: DataTypes.STRING,
-    },
+    
   });
-
-FIXME: // This is so janky but I wanted more dummy data. Please don't throw rocks at me.
 
 if (isFirstConnection) {
   sequelize.sync().then(async (_) => {
-    await Artist.create({
-      name: "James Blunt",
-      label: "Periscope",
-      description: "Some fella with a guitar",
-    });
-
-    await Artist.create({
-      name: "The Beatles",
-      label: "Apple",
-      description:
-        "A bunch of guys from liverpool, they did okay. Pretty obscure though.",
-    });
-
-    await Artist.create({
-      name: "The Rolling Stones",
-      label: "Decca",
-      description:
-        "Fun fact: They're not actually related to any rock formations.",
-    });
-
-    await Artist.create({
-      name: "Arianna Grande",
-      label: "Republic",
-      description: "Ironically, she's actually quite short.",
-    });
+    await Artist.bulkCreate([
+      {
+        name: "James Blunt",
+        label: "Periscope",
+        description: "Some fella with a guitar",
+      },
+      {
+        name: "The Beatles",
+        label: "Apple",
+        description:
+          "A bunch of guys from liverpool, they did okay. Pretty obscure though.",
+      },
+      {
+        name: "The Rolling Stones",
+        label: "Decca",
+        description:
+          "Fun fact: They're not actually related to any rock formations.",
+      },
+      {
+        name: "Arianna Grande",
+        label: "Republic",
+        description: "Ironically, she's actually quite short.",
+      },
+    ]);
   });
 }
 
