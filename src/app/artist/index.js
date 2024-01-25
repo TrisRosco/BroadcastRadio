@@ -8,8 +8,6 @@ import {
   Stack,
   Label,
   Text,
-  MessageBar,
-  MessageBarType,
 } from "@fluentui/react";
 import { getTheme } from "@fluentui/react";
 
@@ -57,7 +55,7 @@ const Artist = () => {
   };
 
   const handlePhotoChange = (event) => {
-    if (!checkPhoto()) {
+    if (checkPhoto(event)) {
       const currentArtist = artist;
 
       const updatedArtist = {
@@ -66,9 +64,8 @@ const Artist = () => {
       };
       setArtist(updatedArtist);
     } else {
-      // clear the file input
       event.target.value = null;
-      alert("Invalid file type or size");
+      alert("Please upload a valid image");
     }
   };
 
@@ -95,7 +92,6 @@ const Artist = () => {
     navigate("/");
   };
 
-  // Check if the required fields are filled
   const checkFields = () => {
     setIsEmpty({
       name: !artist.name,
@@ -103,11 +99,10 @@ const Artist = () => {
     });
   };
 
-  // Check if the photo is valid
-  const checkPhoto = () => {
+  const checkPhoto = (event) => {
     if (
-      artist.artistImage.type !== "image/jpeg" ||
-      artist.artistImage.size > 1024000
+      event.target.files[0].size > 1000000 ||
+      event.target.files[0].type !== "image/jpeg"
     ) {
       return false;
     }
@@ -166,9 +161,7 @@ const Artist = () => {
           variant="small"
           styles={{ root: { color: theme.palette.neutralSecondary } }}
         >
-          Format: .jpg
-          <br />
-          Max size: 1Mb
+          Max file size: 1MB
         </Text>
       </Stack>
       <Stack
